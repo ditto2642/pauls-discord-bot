@@ -52,6 +52,7 @@ var content = message.content.toLowerCase();
   }
 if (content.startsWith('>img')){
    content = content.replace(">img ").trim();
+message.channel.sendMessage(content);
  queryURL = "https://api.imgur.com/3/gallery/search/q?=" + content + "&q_type=jpeg&q_size_px=500";
 
 
@@ -59,18 +60,18 @@ if (content.startsWith('>img')){
 
 
 
-  message.channel.sendMessage(   $.ajax({
+  message.channel.sendMessage($.ajax({
          url: queryURL,
          method: 'GET',
          headers: {
         Authorization: 'Client-ID ' + '9720b6c75210077',
-          }}).done(function(response) { var results = response.data; return(results[i]);
+      }}));
 
 
 
-      }));
+      };
 
-}}
+}
 
 // log our bot in
 bot.login(token);
