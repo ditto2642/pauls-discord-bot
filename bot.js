@@ -12,7 +12,7 @@ const bot = new Discord.Client();
 const token = '';
 
 //var imgurGallery = require('imgurGallery');
-var imgurSearch = require('imgur-search');
+const imgurSearch = require('imgur-search');
 //var imgurServiceErrors = require('imgurServiceErrors');
 const Window = require('window');
 
@@ -46,32 +46,33 @@ function messageHandle(message) {
 var content = message.content.toLowerCase();
 
   // if the message is "ping",
-  if (content.startsWith('ping')) {
+  if (content.startsWith('ping') || content.startsWith('nut')) {
     // send "pong" to the same channel.
     message.channel.sendMessage('pong');
   }
 if (content.startsWith('>img')){
-   content = content.replace(">img ").trim();
+   content = content.substring(">img ".length);
 message.channel.sendMessage(content);
- queryURL = "https://api.imgur.com/3/gallery/search/q?=" + content + "&q_type=jpeg&q_size_px=500";
+ queryURL = "https://api.imgur.com/3/gallery/search/q?=nut";
 
 
+    $.ajax({
+      url: albumAPI,
+      type: 'GET',
+      dataType: 'json',
+      headers: {
+      Authorization: 'Client-ID ' + '9720b6c75210077',
+      },
+      success: function(data) {
 
+        console.log(data[0].link);
 
+      },
+      error: function() { console.log("ERRORZ"); },
+      beforeSend: setHeader
+    });
 
-
-  message.channel.sendMessage($.ajax({
-         url: queryURL,
-         method: 'GET',
-         headers: {
-        Authorization: 'Client-ID ' + '9720b6c75210077',
-      }}));
-
-
-
-      };
+      }
 
 }
-
-// log our bot in
 bot.login(token);
