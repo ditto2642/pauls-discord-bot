@@ -51,13 +51,14 @@ var content = message.content.toLowerCase();
     message.channel.sendMessage('pong');
   }
 if (content.startsWith('>img')){
+
    content = content.substring(">img ".length);
-message.channel.sendMessage(content);
- queryURL = "https://api.imgur.com/3/gallery/search/q?=nut";
+//message.channel.sendMessage(content);
+ queryURL = "https://api.imgur.com/3/gallery/search/?q=" + content;
 
 
     $.ajax({
-      url: albumAPI,
+      url: queryURL,
       type: 'GET',
       dataType: 'json',
       headers: {
@@ -65,14 +66,12 @@ message.channel.sendMessage(content);
       },
       success: function(data) {
 
-        console.log(data[0].link);
+        message.channel.sendMessage(data.data[Math.floor(Math.random() * 10)].link);
 
       },
-      error: function() { console.log("ERRORZ"); },
-      beforeSend: setHeader
-    });
+      error: function() { console.log("There was an error."); },});
 
-      }
+   }
 
 }
 bot.login(token);
