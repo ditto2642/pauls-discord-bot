@@ -45,33 +45,46 @@ bot.on('message', message => {
 function messageHandle(message) {
 var content = message.content.toLowerCase();
 
-  // if the message is "ping",
+
+// if the message is "ping",
   if (content.startsWith('ping') || content.startsWith('nut')) {
     // send "pong" to the same channel.
     message.channel.sendMessage('pong');
   }
-if (content.startsWith('>img')){
 
-   content = content.substring(">img ".length);
+
+//IMG command, searches imgur
+if (content.startsWith('>img')){
+content = content.substring(">img ".length);
 //message.channel.sendMessage(content);
  queryURL = "https://api.imgur.com/3/gallery/search/?q=" + content;
-
-
-    $.ajax({
+$.ajax({
       url: queryURL,
       type: 'GET',
       dataType: 'json',
       headers: {
       Authorization: 'Client-ID ' + '9720b6c75210077',
       },
-      success: function(data) {
+      success: function(data) {message.channel.sendMessage(data.data[Math.floor(Math.random() * 100)].link);},
+      error: function() { console.log("There was an error."); },});}
 
-        message.channel.sendMessage(data.data[Math.floor(Math.random() * 10)].link);
 
-      },
-      error: function() { console.log("There was an error."); },});
-
+if(content.startsWith('>help')){
+     message.channel.sendMessage("```Commands: >img <search term> (searches image on imgur) -- ping (responds with pong)```")
    }
+   if (content.startsWith('>neko') || content.startsWith('>catgirl')){
+
+   //message.channel.sendMessage(content);
+    queryURL = "https://api.imgur.com/3/album/j83vM/images";
+   $.ajax({
+         url: queryURL,
+         type: 'GET',
+         dataType: 'json',
+         headers: {
+         Authorization: 'Client-ID ' + '9720b6c75210077',
+         },
+         success: function(data) {message.channel.sendMessage(data.data[Math.floor(Math.random() * 100)].link);},
+         error: function() { console.log("There was an error."); },});}
 
 }
 bot.login(token);
