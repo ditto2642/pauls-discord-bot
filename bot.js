@@ -1,6 +1,4 @@
-/*
-  A ping pong bot, whenever you send "ping", it replies "pong".
-*/
+
 
 // import the discord.js module
 const Discord = require('discord.js');
@@ -70,12 +68,18 @@ $.ajax({
 
 
 if(content.startsWith('>help')){
-     message.channel.sendMessage("```Commands: >img <search term> (searches image on imgur) -- ping (responds with pong)```")
+     message.channel.sendMessage("```Commands: >img <search term> (searches image on imgur) -- ping (responds with pong) -- >neko/>catgirl (Sends a catgirl)```")
    }
+
+//neko/catgirl command
    if (content.startsWith('>neko') || content.startsWith('>catgirl')){
 
-   //message.channel.sendMessage(content);
+
+ //message.channel.sendMessage(content);
+
     queryURL = "https://api.imgur.com/3/album/j83vM/images";
+//looks for -nsfw and changes album if it exists
+    if(content.includes('-nsfw')) {queryURL = "https://api.imgur.com/3/album/j83vM/images"}
    $.ajax({
          url: queryURL,
          type: 'GET',
