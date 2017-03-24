@@ -7,7 +7,7 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 
 // the token of your bot - https://discordapp.com/developers/applications/me
-const token = '';
+const token = 'MjkxMjQ0Njk0MzgwMzQ3Mzky.C7LbIg.RSgBdtQwj0guNuCMsVZrxlcdpqo';
 
 //var imgurGallery = require('imgurGallery');
 const imgurSearch = require('imgur-search');
@@ -53,9 +53,10 @@ var content = message.content.toLowerCase();
 
 //IMG command, searches imgur
 if (content.startsWith('>img')){
-content = content.substring(">img ".length);
+var request = content.substring(">img ".length);
 //message.channel.sendMessage(content);
- queryURL = "https://api.imgur.com/3/gallery/search/?q=" + content;
+message.channel.sendMessage(request);
+ queryURL = "https://api.imgur.com/3/gallery/search/?q=" + request;
 $.ajax({
       url: queryURL,
       type: 'GET',
@@ -64,11 +65,13 @@ $.ajax({
       Authorization: 'Client-ID ' + '9720b6c75210077',
       },
       success: function(data) {message.channel.sendMessage(data.data[Math.floor(Math.random() * 100)].link);},
-      error: function() { console.log("There was an error."); },});}
+      error: function() { console.log("There was an error."); },});
+
+    }
 
 
 if(content.startsWith('>help')){
-     message.channel.sendMessage("```Commands: >img <search term> (searches image on imgur) -- ping (responds with pong) -- >neko/>catgirl (Sends a catgirl)```")
+     message.channel.sendMessage("```Commands: >img <search term> (searches image on imgur) -- ping (responds with pong) -- >neko/>catgirl (Sends a catgirl) -- >meme {meme type} (topText) [bottom text] (use { for meme type, ( for top text and [ for bottom text (known memes: buzz, aliens, tenguy, cb, ants, facepalm, ggg, noidea, icanhas))```")
    }
 
 //neko/catgirl command
@@ -79,7 +82,7 @@ if(content.startsWith('>help')){
 
     queryURL = "https://api.imgur.com/3/album/j83vM/images";
 //looks for -nsfw and changes album if it exists
-    if(content.includes('-nsfw')) {queryURL = "https://api.imgur.com/3/album/j83vM/images"}
+    //if(content.includes('-nsfw')) {queryURL = "https://api.imgur.com/3/album/j83vM/images"}
    $.ajax({
          url: queryURL,
          type: 'GET',
@@ -89,6 +92,27 @@ if(content.startsWith('>help')){
          },
          success: function(data) {message.channel.sendMessage(data.data[Math.floor(Math.random() * 100)].link);},
          error: function() { console.log("There was an error."); },});}
+if(content.startsWith(">meme")){
+content = content.substring(">meme ".length);
+   var n = content.indexOf('}');
+    meme = content.substring(0, n != -1 ? n : content.length).split("{").pop().replace(/\s+/g, '-');
+     n = content.indexOf(')');
+     topText = content.substring(0, n != -1 ? n : content.length).split("(").pop().replace(/\s+/g, '-');
+      n = content.indexOf(']');
+      bottomText = content.substring(0, n != -1 ? n : content.length).split("[").pop().replace(/\s+/g, '-');
+message.channel.sendMessage(meme + topText + bottomText);
+if(meme == null || topText == null || bottomText == null){
+  message.channel.sendMessage("You either did not enter a field or mis-entered one field.");
+}
+else{
+  message.channel.sendMessage("http://memegen.link/" + meme + "/" + topText + "/" + bottomText + ".jpg");
+}
+
 
 }
+
+
+}
+
+
 bot.login(token);
