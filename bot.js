@@ -7,7 +7,7 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 
 // the token of your bot - https://discordapp.com/developers/applications/me
-const token = 'MjkxMjQ0Njk0MzgwMzQ3Mzky.C7LbIg.RSgBdtQwj0guNuCMsVZrxlcdpqo';
+const token = '';
 
 //var imgurGallery = require('imgurGallery');
 const imgurSearch = require('imgur-search');
@@ -21,7 +21,7 @@ const div = window.document.createElement('div');
 
 div instanceof window.HTMLElement
 // true
-require("jsdom").env("", function(err, window) {
+require("node-jsdom").env("", function(err, window) {
     if (err) {
         console.error(err);
         return;
