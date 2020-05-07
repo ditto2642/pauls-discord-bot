@@ -58,6 +58,7 @@ client.on('messageDelete', (msg) => {
                                 .setTitle("Deleted Message from " + msg.author.tag)
                                 .addFields(
                                         {name: "Message", value: msg.content},
+                                        {name: "Channel", value: msg.channel.name},
                                         {name: "Timestamp", value: msg.createdAt}
                                 );
                         try {
