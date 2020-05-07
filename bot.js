@@ -19,12 +19,12 @@ client.on('ready', () => {
 
 client.on('message', (msg) => {
         if(msg.content.startsWith('fig')) {
-                text = msg.substring(3);
+                text = msg.content.substring(3);
                 figlet(text, (err, data) => {
                         if(err) {
                                 console.log("figlet broke?");
                         }
-                        msg.channel.send(data)
+                        msg.channel.send("```" + data + "```")
                 });
         }
 });
