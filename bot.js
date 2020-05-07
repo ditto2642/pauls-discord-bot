@@ -6,7 +6,8 @@ const figlet = require('figlet');
 
 token = process.argv[2];
 //console.log('Using token: ' + token);
-
+console.log("bruh");
+console.log("moment");
 client.on('ready', () => {
         figlet('BOT IS READY', (err, data) => {
                 if (err) {
