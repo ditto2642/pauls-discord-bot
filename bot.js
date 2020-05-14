@@ -70,7 +70,11 @@ client.on('message', (msg) => {
                 if (command == "execute") {
                         if (executors.includes(""+msg.author.id)) {
                                 if(code != undefined) {
-                                        msg.channel.send(eval(code.trim(/(javascript)|(js)/gm)));
+                                        try {
+                                                msg.channel.send(eval(code.trim(/(javascript)|(js)/gm)));
+                                        } catch (e) {
+                                                msg.channel.send("Your code caused an error");
+                                        }
                                 } else {
                                         msg.channel.send("You have to send some code using ```[code]```");
                                 }
