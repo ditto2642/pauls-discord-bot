@@ -31,7 +31,7 @@ client.on('message', (msg) => {
         if(input) {
 
                 command = input.groups.command;
-                args = input.groups.args.trim(" ");
+                args = input.groups.args;
                 code = input.groups.code;
 
                 if (input.groups.command == "fig") {
