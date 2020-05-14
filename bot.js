@@ -12,8 +12,11 @@ client.on('ready', () => {
         console.log("BOT IS READY");
 });
 
-serverText = fs. readFileSync('servers.json');
+serverText = fs.readFileSync('servers.json');
 var servers = JSON.parse(serverText);
+
+executorsText = fs.readFileSync('executors.json');
+const executors = JSON.parse(executorsText).list;
 
 function getChannelFromID(server, id) {
         return server.channels.resolve(id);
@@ -21,10 +24,9 @@ function getChannelFromID(server, id) {
 
 client.on('message', (msg) => {
 
-        const re = /\?(?<command>\w*)(?<args> (\w*)*)( ```(?<code>.*)```)?/gm;
+        const re = /\?(?<command>\w*)(?<args> (\w*)*)?( ```(?<code>.*)```)?/gm;
         input = re.exec(msg.content);
 
-        console.dir(input);
 
         if(input) {
 
@@ -45,30 +47,38 @@ client.on('message', (msg) => {
                                 msg.channel.send("```" + data + "```")
                         });
                 }
-        }
 
+                if (command == "setdel") {
+                        var channel = args;
+                        if (!servers[msg.guild.id]) {
+                                servers[msg.guild.id] = {}
+                        }
+                        servers[msg.guild.id]["deletes"] = channel;
 
+                        let newServer = JSON.stringify(servers);
 
-        if (msg.content.startsWith('?setdel')) {
-                var channel = msg.content.substring(11);
-                if (!servers[msg.guild.id]) {
-                        servers[msg.guild.id] = {}
+                        fs.writeFile('servers.json', newServer, (err) => {
+                                if (err) throw err;
+                                console.log("delete prefs updated for " + msg.guild.name);
+                        });
+
+                        msg.channel.send("Delete channel preference set.")
                 }
-                servers[msg.guild.id]["deletes"] = channel;
 
-                let newServer = JSON.stringify(servers);
+                if (command == "execute") {
+                        if (executors.includes(""+msg.author.id)) {
+                                if(code) {
+                                        msg.channel.send(exec(code.trim(/(javascript)|(js)/gm)));
+                                } else {
+                                        msg.channel.send("You have to send some code using ```[code]```");
+                                }
+                        } else {
+                                msg.channel.send("You are not an approved executor");
+                        }
+                }
 
-                fs.writeFile('servers.json', newServer, (err) => {
-                        if (err) throw err;
-                        console.log("delete prefs updated for " + msg.guild.name);
-                });
-
-                msg.channel.send("Delete channel preference set.")
         }
 
-        if (msg.content.startsWith("?execute")) {
-
-        }
 });
 
 client.on('messageDelete', (msg) => {
@@ -94,7 +104,6 @@ client.on('messageDelete', (msg) => {
 
                 }
         }
-
 
 });
 
