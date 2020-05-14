@@ -24,7 +24,7 @@ function getChannelFromID(server, id) {
 
 client.on('message', (msg) => {
 
-        const re = /\?(?<command>\w*)(?<args> (\w*)*)?( ```(?<code>.*)```)?/gms;
+        const re = /\?(?<command>\w*)(?<args> (\w*)*)?( ?```(?<code>.*)```)?/gms;
         input = re.exec(msg.content);
 
 
