@@ -24,6 +24,8 @@ client.on('message', (msg) => {
         const re = /\?(?<command>\w*)(?<args> (\w*)*)( ```(?<code>.*)```)?/gm;
         input = re.exec(msg.content);
 
+        console.dir(input);
+
         if(input) {
 
                 command = input.groups.command;
