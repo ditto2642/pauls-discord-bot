@@ -34,6 +34,8 @@ client.on('message', (msg) => {
                 args = input.groups.args;
                 code = input.groups.code;
 
+                console.dir(input);
+
                 if (input.groups.command == "fig") {
                         if (input.groups.args == undefined) {
                                 msg.channel.send("You need to give some text to figlet");
