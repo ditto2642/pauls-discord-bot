@@ -20,17 +20,34 @@ function getChannelFromID(server, id) {
 }
 
 client.on('message', (msg) => {
-        if (msg.content.startsWith('fig')) {
-                text = msg.content.substring(3);
-                figlet(text, (err, data) => {
-                        if (err) {
-                                console.log("figlet broke?");
+
+        const re = /\?(?<command>\w*)(?<args> (\w*)*)( ```(?<code>.*)```)?/gm;
+        input = re.exec(msg.content);
+
+        if(input) {
+
+                command = input.groups.command;
+                args = input.groups.args.trim(" ");
+                code = input.groups.code;
+
+                if (input.groups.command == "fig") {
+                        if (input.groups.args == undefined) {
+                                msg.channel.send("You need to give some text to figlet");
+                                return;
                         }
-                        msg.channel.send("```" + data + "```")
-                });
+
+                        figlet(args, (err, data) => {
+                                if (err) {
+                                        console.log("figlet broke?");
+                                }
+                                msg.channel.send("```" + data + "```")
+                        });
+                }
         }
 
-        if (msg.content.startsWith('set delete')) {
+
+
+        if (msg.content.startsWith('?setdel')) {
                 var channel = msg.content.substring(11);
                 if (!servers[msg.guild.id]) {
                         servers[msg.guild.id] = {}
@@ -46,11 +63,15 @@ client.on('message', (msg) => {
 
                 msg.channel.send("Delete channel preference set.")
         }
+
+        if (msg.content.startsWith("?execute")) {
+
+        }
 });
 
 client.on('messageDelete', (msg) => {
         if (servers[msg.guild.id]) {
-                if(servers[msg.guild.id]["deletes"]) {
+                if (servers[msg.guild.id]["deletes"]) {
                         chan = getChannelFromID(msg.guild, servers[msg.guild.id]["deletes"]);
 
                         let delEmbed = new Discord.MessageEmbed()
@@ -71,6 +92,8 @@ client.on('messageDelete', (msg) => {
 
                 }
         }
+
+
 });
 
 client.login(token);
