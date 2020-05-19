@@ -93,7 +93,7 @@ client.on('message', (msg) => {
 
         }
 
-        if (msg.channel.id == servers.irc.cid && msg.author.id == "460651339358273546") {
+        if (msg.channel.id == servers.irc.cid && msg.author.id != "460651339358273546") {
                 ircClient.say(servers.irc.channels[0], "<" + msg.member.displayName + ">: " + msg.content);
         }
 
