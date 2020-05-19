@@ -127,7 +127,7 @@ client.on('messageDelete', (msg) => {
 
 ircClient.addListener('message', (from, to, message) => {
         if (servers.irc.channels.includes(to)) {
-                client.guild.resolve(servers.irc.sid).channels.resolve(servers.irc.cid).send(from + ": " + message);
+                client.guilds.resolve(servers.irc.sid).channels.resolve(servers.irc.cid).send(from + ": " + message);
         }
 });
 
