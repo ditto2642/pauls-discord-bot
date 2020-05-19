@@ -93,7 +93,7 @@ client.on('message', (msg) => {
 
         }
 
-        if (msg.channel.id == servers.irc.cid) {
+        if (msg.channel.id == servers.irc.cid && msg.author.id == "460651339358273546") {
                 ircClient.say(servers.irc.channels[0], "<" + msg.member.displayName + ">: " + msg.content);
         }
 
@@ -126,8 +126,8 @@ client.on('messageDelete', (msg) => {
 });
 
 ircClient.addListener('message', (from, to, message) => {
-        if (servers.irc.channels.includes(to)) {
-                client.guilds.resolve(servers.irc.sid).channels.resolve(servers.irc.cid).send(from + ": " + message);
+        if (servers.irc.channels.includes(to) && !from.includes("KholoBot")) {
+                client.guilds.resolve(servers.irc.sid).channels.resolve(servers.irc.cid).send("<" + from + "> " + message);
         }
 });
 
