@@ -2,6 +2,8 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const figlet = require('figlet');
 const fs = require('fs');
+const irc = require('irc');
+
 
 //process.argv.forEach((t) => console.log(t));
 
@@ -14,6 +16,12 @@ client.on('ready', () => {
 
 serverText = fs.readFileSync('servers.json');
 var servers = JSON.parse(serverText);
+
+const ircClient = new irc(servers.irc.hostname, servers.irc.nick, {
+        channels: servers.irc.channels,
+        secure: servers.irc.secure,
+        port: servers.irc.port
+});
 
 executorsText = fs.readFileSync('executors.json');
 const executors = JSON.parse(executorsText).list;
@@ -34,7 +42,7 @@ client.on('message', (msg) => {
                 args = input.groups.args;
                 code = input.groups.code;
 
-                console.dir(input);
+                //console.dir(input);
 
                 if (input.groups.command == "fig") {
                         if (input.groups.args == undefined) {
@@ -85,6 +93,10 @@ client.on('message', (msg) => {
 
         }
 
+        if (msg.channel.id == servers.irc.cid) {
+                ircClient.say(servers.irc.channels[0], "<" + msg.member.displayName + ">: " + msg.content);
+        }
+
 });
 
 client.on('messageDelete', (msg) => {
@@ -111,6 +123,12 @@ client.on('messageDelete', (msg) => {
                 }
         }
 
+});
+
+ircClient.addListener('message', (from, to, message) => {
+        if (servers.irc.channels.includes(to)) {
+                client.guild.resolve(servers.irc.sid).channels.resolve(servers.irc.cid).send(from + ": " + message);
+        }
 });
 
 client.login(token);
