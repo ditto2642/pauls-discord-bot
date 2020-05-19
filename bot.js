@@ -17,7 +17,7 @@ client.on('ready', () => {
 serverText = fs.readFileSync('servers.json');
 var servers = JSON.parse(serverText);
 
-const ircClient = new irc(servers.irc.hostname, servers.irc.nick, {
+const ircClient = new irc.Client(servers.irc.hostname, servers.irc.nick, {
         channels: servers.irc.channels,
         secure: servers.irc.secure,
         port: servers.irc.port
