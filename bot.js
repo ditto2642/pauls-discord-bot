@@ -131,4 +131,8 @@ ircClient.addListener('message', (from, to, message) => {
         }
 });
 
+ircClient.addListener('error', (msg) => {
+        console.log("IRC Error: " + msg);
+});
+
 client.login(token);
