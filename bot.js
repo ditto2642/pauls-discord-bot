@@ -93,8 +93,14 @@ client.on('message', (msg) => {
 
         }
 
-        if (msg.channel.id == servers.irc.cid && msg.author.id != "460651339358273546") {
-                ircClient.say(servers.irc.channels[0], "<" + msg.member.displayName + ">: " + msg.content);
+        if (msg.channel.id == servers.irc.cid && msg.author.id != client.user.id) {
+
+                if (msg.content != "")
+                        ircClient.say(servers.irc.channels[0], "<" + msg.member.displayName + ">: " + msg.content);
+
+                msg.embeds.forEach((e) => {
+                        ircClient.say(servers.irc.channels[0], "<" + msg.member.displayName + "> " + e.url);
+                });
         }
 
 });
