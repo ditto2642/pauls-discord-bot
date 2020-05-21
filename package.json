@@ -4,6 +4,7 @@
     "discord.js": "^12.2.0",
     "figlet": "^1.4.0",
     "irc": "^0.5.2",
+    "node-fetch": "^2.6.0",
     "request": "^2.88.2"
   }
 }

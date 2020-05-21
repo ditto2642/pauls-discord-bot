@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const figlet = require('figlet');
 const fs = require('fs');
 const irc = require('irc');
-const request = require('request');
+const fetch = require('node-fetch');
 
 
 //process.argv.forEach((t) => console.log(t));
@@ -100,14 +100,23 @@ client.on('message', (msg) => {
 
                         console.log(code);
 
-                        request.post("http://latex2png.com/api/convert", {
-                                body: {
-                                        auth: {user:"guest", password:"guest"},
-                                        latex: "test",
-                                        resolution: 600,
-                                        color: "fffffff"
-                                }
-                        }, (err, res, body) => {
+                        latexmsg = {
+                                auth: {user:"guest", password:"guest"},
+                                latex: code,
+                                resolution: 600,
+                                color: "fffffff"
+                        };
+
+                        fetch("http://latex2png.com/api/convert", {
+                                credentials: 'omit',
+                                method: 'post',
+                                body: JSON.stringify(latexmsg),
+                                headers: {'Content-Type': 'application/json'}
+                        }).then(res => {
+                                console.log(await res.json());
+                        });
+
+                        /*request.post("http://latex2png.com/api/convert", {}, (err, res, body) => {
                                 if (err) {
                                         console.dir(err);
                                 }
@@ -116,7 +125,7 @@ client.on('message', (msg) => {
                                 msg.channel.send({
                                         files: [imgUrl]
                                 });
-                        });
+                        });*/
                 }
 
         }
