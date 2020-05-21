@@ -101,7 +101,7 @@ client.on('message', (msg) => {
                         console.log(code);
 
                         request.post("http://latex2png.com/api/convert", {
-                                json: {
+                                body: {
                                         auth: {user:"guest", password:"guest"},
                                         latex: "test",
                                         resolution: 600,
