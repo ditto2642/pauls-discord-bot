@@ -98,11 +98,17 @@ client.on('message', (msg) => {
                                 return;
                         }
 
+                        var color = "ffffff";
+
+                        if (args) {
+                                color = args.trim(" ");
+                        }
+
                         latexmsg = {
                                 auth: {user:"guest", password:"guest"},
                                 latex: code,
                                 resolution: 600,
-                                color: "ffffff"
+                                color: color
                         };
 
                         fetch("http://latex2png.com/api/convert", {
@@ -117,7 +123,11 @@ client.on('message', (msg) => {
                                                 files: [imgUrl]
                                         });
                                 } else {
+                                        msg.channel.send("there was an error processing your input");
                                         console.log(json['result-message']);
+                                        if (json["result-code"] == -103) {
+                                                msg.channel.send("make sure the color you input is a valid hex value with no #");
+                                        }
                                 }
                         });
                 }
