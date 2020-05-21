@@ -112,9 +112,8 @@ client.on('message', (msg) => {
                                 method: 'post',
                                 body: JSON.stringify(latexmsg),
                                 headers: {'Content-Type': 'application/json'}
-                        }).then(res => {
-                                data = res.json();
-                                console.log(data);
+                        }).then(res => res.json()).then(json => {
+                                console.log(json)
                         });
 
                         /*request.post("http://latex2png.com/api/convert", {}, (err, res, body) => {
