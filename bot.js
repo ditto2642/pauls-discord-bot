@@ -103,7 +103,7 @@ client.on('message', (msg) => {
                         request.post("http://latex2png.com/api/convert", {
                                 json: {
                                         auth: {user:"guest", password:"guest"},
-                                        latex: code,
+                                        latex: "test",
                                         resolution: 600,
                                         color: "fffffff"
                                 }
@@ -111,7 +111,8 @@ client.on('message', (msg) => {
                                 if (err) {
                                         console.dir(err);
                                 }
-                                var imgUrl = `http://latex2png.com${res.url}`;
+                                console.dir(body);
+                                var imgUrl = `http://latex2png.com${body.url}`;
                                 msg.channel.send({
                                         files: [imgUrl]
                                 });
