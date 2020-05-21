@@ -44,7 +44,7 @@ client.on('message', (msg) => {
 
                 //console.dir(input);
 
-                if (input.groups.command == "fig") {
+                if (command == "fig") {
                         if (input.groups.args == undefined) {
                                 msg.channel.send("You need to give some text to figlet");
                                 return;
@@ -132,7 +132,7 @@ client.on('messageDelete', (msg) => {
 });
 
 ircClient.addListener('message', (from, to, message) => {
-        if (servers.irc.channels.includes(to) && !from.includes("KholoBot")) {
+        if (servers.irc.channels.includes(to) && !from.includes(servers.irc.nick)) {
                 client.guilds.resolve(servers.irc.sid).channels.resolve(servers.irc.cid).send("<" + from + "> " + message);
         }
 });
