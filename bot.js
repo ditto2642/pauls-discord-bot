@@ -104,7 +104,7 @@ client.on('message', (msg) => {
                                 auth: {user:"guest", password:"guest"},
                                 latex: code,
                                 resolution: 600,
-                                color: "fffffff"
+                                color: "ffffff"
                         };
 
                         fetch("http://latex2png.com/api/convert", {
@@ -113,7 +113,12 @@ client.on('message', (msg) => {
                                 body: JSON.stringify(latexmsg),
                                 headers: {'Content-Type': 'application/json'}
                         }).then(res => res.json()).then(json => {
-                                console.log(json)
+                                if (res['result-message'] == "success") {
+                                        var imgUrl = `http://latex2png.com${res.url}`;
+                                        msg.channel.send({
+                                                files: [imgUrl]
+                                        });
+                                }
                         });
 
                         /*request.post("http://latex2png.com/api/convert", {}, (err, res, body) => {
