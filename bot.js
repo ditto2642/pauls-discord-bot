@@ -99,6 +99,7 @@ client.on('message', (msg) => {
                         ircClient.say(servers.irc.channels[0], "<" + msg.member.displayName + ">: " + msg.content);
 
                 msg.embeds.forEach((e) => {
+                        console.log("relayed an embed");
                         ircClient.say(servers.irc.channels[0], "<" + msg.member.displayName + "> " + e.url);
                 });
         }
