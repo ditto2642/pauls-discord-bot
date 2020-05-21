@@ -107,8 +107,8 @@ client.on('message', (msg) => {
                                 }
                         }, (err, res, body) => {
                                 var imgUrl = `http://latex2png.com${res.url}`;
-                                msg.channel.send("", {
-                                        file: imgUrl
+                                msg.channel.send({
+                                        files: [imgUrl]
                                 });
                         });
                 }
