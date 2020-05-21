@@ -116,6 +116,8 @@ client.on('message', (msg) => {
                                         msg.channel.send({
                                                 files: [imgUrl]
                                         });
+                                } else {
+                                        console.log(json['result-message']);
                                 }
                         });
                 }
