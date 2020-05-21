@@ -95,6 +95,8 @@ client.on('message', (msg) => {
 
         if (msg.channel.id == servers.irc.cid && msg.author.id != client.user.id) {
 
+                console.dir(msg);
+
                 if (msg.content != "")
                         ircClient.say(servers.irc.channels[0], "<" + msg.member.displayName + ">: " + msg.content);
 
@@ -136,6 +138,10 @@ ircClient.addListener('message', (from, to, message) => {
         if (servers.irc.channels.includes(to) && !from.includes(servers.irc.nick)) {
                 client.guilds.resolve(servers.irc.sid).channels.resolve(servers.irc.cid).send("<" + from + "> " + message);
         }
+});
+
+ircClient.addListener('registered', (msg) => {
+        console.log("IRC Bridge Connected");
 });
 
 ircClient.addListener('error', (msg) => {
