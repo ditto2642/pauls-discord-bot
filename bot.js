@@ -3,6 +3,7 @@ const client = new Discord.Client();
 const figlet = require('figlet');
 const fs = require('fs');
 const irc = require('irc');
+const request = require('request');
 
 
 //process.argv.forEach((t) => console.log(t));
@@ -89,6 +90,27 @@ client.on('message', (msg) => {
                         } else {
                                 msg.channel.send("You are not an approved executor");
                         }
+                }
+
+                if (command == "latex") {
+                        if (code == undefined) {
+                                msg.channel.send("you need to send a latex statement in a code block");
+                                return;
+                        }
+
+                        request.post("http://latex2png.com/api/convert", {
+                                json: {
+                                        auth: {user:"guest", password:"guest"},
+                                        latex: code,
+                                        resolution: 600,
+                                        color: "fffffff"
+                                }
+                        }, (err, res, body) => {
+                                var imgUrl = `http://latex2png.com${res.url}`;
+                                msg.channel.send("", {
+                                        file: imgUrl
+                                });
+                        });
                 }
 
         }
