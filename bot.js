@@ -106,8 +106,10 @@ client.on('message', (msg) => {
                                         color: "fffffff"
                                 }
                         }, (err, res, body) => {
+                                console.log(body.url);
+                                console.log(res.url);
                                 var imgUrl = `http://latex2png.com${res.url}`;
-                                console.dir(res);
+                                //console.dir(res);
                                 console.dir(body);
                                 msg.channel.send({
                                         files: [imgUrl]
