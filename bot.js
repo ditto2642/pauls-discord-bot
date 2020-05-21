@@ -113,7 +113,7 @@ client.on('message', (msg) => {
                                 body: JSON.stringify(latexmsg),
                                 headers: {'Content-Type': 'application/json'}
                         }).then(res => {
-                                data = await res.json();
+                                data = res.json();
                                 console.log(data);
                         });
 
