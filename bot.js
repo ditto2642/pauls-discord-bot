@@ -113,8 +113,8 @@ client.on('message', (msg) => {
                                 body: JSON.stringify(latexmsg),
                                 headers: {'Content-Type': 'application/json'}
                         }).then(res => res.json()).then(json => {
-                                if (res['result-message'] == "success") {
-                                        var imgUrl = `http://latex2png.com${res.url}`;
+                                if (json['result-message'] == "success") {
+                                        var imgUrl = `http://latex2png.com${json.url}`;
                                         msg.channel.send({
                                                 files: [imgUrl]
                                         });
