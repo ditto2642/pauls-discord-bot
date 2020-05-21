@@ -95,13 +95,13 @@ client.on('message', (msg) => {
 
         if (msg.channel.id == servers.irc.cid && msg.author.id != client.user.id) {
 
-                console.dir(msg);
+                //console.dir(msg);
 
                 if (msg.content != "")
                         ircClient.say(servers.irc.channels[0], "<" + msg.member.displayName + ">: " + msg.content);
 
-                msg.embeds.forEach((e) => {
-                        console.log("relayed an embed");
+                msg.attachments.forEach((e) => {
+                        //console.log("relayed an embed");
                         ircClient.say(servers.irc.channels[0], "<" + msg.member.displayName + "> " + e.url);
                 });
         }
