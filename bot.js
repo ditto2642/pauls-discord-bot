@@ -98,8 +98,6 @@ client.on('message', (msg) => {
                                 return;
                         }
 
-                        console.log(code);
-
                         latexmsg = {
                                 auth: {user:"guest", password:"guest"},
                                 latex: code,
@@ -120,19 +118,7 @@ client.on('message', (msg) => {
                                         });
                                 }
                         });
-
-                        /*request.post("http://latex2png.com/api/convert", {}, (err, res, body) => {
-                                if (err) {
-                                        console.dir(err);
-                                }
-                                console.dir(body);
-                                var imgUrl = `http://latex2png.com${body.url}`;
-                                msg.channel.send({
-                                        files: [imgUrl]
-                                });
-                        });*/
                 }
-
         }
 
         if (msg.channel.id == servers.irc.cid && msg.author.id != client.user.id) {
