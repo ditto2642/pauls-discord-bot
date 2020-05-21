@@ -113,7 +113,8 @@ client.on('message', (msg) => {
                                 body: JSON.stringify(latexmsg),
                                 headers: {'Content-Type': 'application/json'}
                         }).then(res => {
-                                console.log(await res.json());
+                                data = await res.json();
+                                console.log(data);
                         });
 
                         /*request.post("http://latex2png.com/api/convert", {}, (err, res, body) => {
