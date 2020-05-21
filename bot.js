@@ -100,7 +100,7 @@ client.on('message', (msg) => {
 
                         var color = "ffffff";
 
-                        if (args) {
+                        if (args != " " && args != "") {
                                 color = args.trim(" ");
                         }
 
