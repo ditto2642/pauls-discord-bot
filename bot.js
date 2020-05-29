@@ -119,12 +119,14 @@ client.on('message', (msg) => {
                         }).then(res => res.json()).then(json => {
                                 if (json['result-message'] == "success") {
                                         var imgUrl = `http://latex2png.com${json.url}`;
+
                                         msg.channel.send({
                                                 files: [imgUrl]
                                         });
                                 } else {
                                         msg.channel.send("there was an error processing your input");
-                                        console.log(json['result-message']);
+                                        msg.channel.send(json['result-message']);
+
                                         if (json["result-code"] == -103) {
                                                 msg.channel.send("make sure the color you input is a valid hex value with no #");
                                         }
@@ -157,7 +159,7 @@ client.on('messageDelete', (msg) => {
                                 .setColor('#992020')
                                 .setTitle("Deleted Message from " + msg.author.tag)
                                 .addFields(
-                                        {name: "Message", value: msg.content},
+                                        {name: "Message", value: (msg.content?msg.content:"There was no text content")},
                                         {name: "Channel", value: msg.channel.name},
                                         {name: "Timestamp", value: msg.createdAt}
                                 );
