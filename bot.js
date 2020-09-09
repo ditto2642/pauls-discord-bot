@@ -80,7 +80,8 @@ client.on('message', (msg) => {
                         if (executors.includes(""+msg.author.id)) {
                                 if(code != undefined) {
                                         try {
-                                                msg.channel.send(eval(code.trim(/(javascript)|(js)/gm)));
+                                                res = eval(code.trim(/(javascript)|(js)/gm));
+                                                msg.channel.send(res?res:"executed successfully but did not end with an expression");
                                         } catch (e) {
                                                 msg.channel.send("Your code caused an error");
                                         }
